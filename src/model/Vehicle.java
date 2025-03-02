@@ -53,7 +53,7 @@ public class Vehicle {
         return status;
     }
 
-    public VehicleType getType() {
+    public VehicleType getVehicleType() {
         return type;
     }
 
