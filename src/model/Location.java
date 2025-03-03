@@ -12,4 +12,20 @@ public class Location {
         this.address = address;
         this.pincode = pincode;
     }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public int getPincode() {
+        return pincode;
+    }
 }
