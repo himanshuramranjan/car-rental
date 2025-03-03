@@ -12,6 +12,11 @@ public class Vehicle {
     private VehicleStatus status;
     private VehicleType type;
 
+    public Vehicle(int vehicleId, VehicleType type) {
+        this.vehicleId = vehicleId;
+        this.type = type;
+    }
+
     public Vehicle(int vehicleId, String vehicleNum, String company, String modelName, double dailyRentalCost, double hourlyRentalCost, double average, int noOfSeats, VehicleStatus status, VehicleType type) {
         this.vehicleId = vehicleId;
         this.vehicleNum = vehicleNum;
