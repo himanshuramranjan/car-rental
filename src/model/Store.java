@@ -1,6 +1,7 @@
 package model;
 
 import booking.Reservation;
+import booking.ReservationType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Store {
     public Reservation reserveVehicle(User user, Vehicle vehicle, LocalDateTime pickupTime,
                                LocalDateTime dropTime, Location dropLocation)
     {
-        Reservation reservation = new Reservation(user, vehicle, pickupTime, location, dropTime, dropLocation, ReservationType.DAILY);
+        Reservation reservation = new Reservation(user, vehicle, pickupTime, dropTime, location, dropLocation, ReservationType.DAILY);
         reservations.add(reservation);
 
         System.out.println("Reservation done");
