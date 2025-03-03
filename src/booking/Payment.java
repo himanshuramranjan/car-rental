@@ -1,20 +1,22 @@
 package booking;
 
+import java.util.UUID;
+
 public class Payment {
     private final String paymentId;
     private final Bill bill;
     private final PaymentMode paymentMode;
 
-    public Payment(String paymentId, Bill bill, PaymentMode paymentMode) {
-        this.paymentId = paymentId;
+    public Payment(Bill bill, PaymentMode paymentMode) {
+        this.paymentId = UUID.randomUUID().toString();
         this.bill = bill;
         this.paymentMode = paymentMode;
     }
 
-    public void makePayment(Bill bill, PaymentMode paymentMode) {
-        bill.setBillStatus(BillStatus.PAID);
+    public void makePayment() {
+        this.bill.setBillStatus(BillStatus.PAID);
 
-        System.out.println("Paid Rs " + bill.getAmount() + " successfully");
+        System.out.println("Paid Rs " + this.bill.getAmount() + " successfully");
         System.out.println("Your Reservation is successful");
     }
 

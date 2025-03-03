@@ -8,11 +8,11 @@ public class Bill {
     private double amount;
     private BillStatus billStatus;
 
-    public Bill(Reservation reservation, double amount, BillStatus billStatus) {
+    public Bill(Reservation reservation, double amount) {
         this.billId = UUID.randomUUID().toString();
         this.reservation = reservation;
         this.amount = amount;
-        this.billStatus = billStatus;
+        this.billStatus = BillStatus.PENDING;
     }
 
     public void setAmount(double amount) {
