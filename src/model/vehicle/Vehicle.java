@@ -1,4 +1,4 @@
-package model;
+package model.vehicle;
 
 import enums.VehicleStatus;
 import enums.VehicleType;
@@ -6,12 +6,8 @@ import enums.VehicleType;
 public abstract class Vehicle {
     private int vehicleId;
     private String vehicleNum;
-    private String company;
-    private String modelName;
     private double dailyRentalCost;
     private double hourlyRentalCost;
-    private double average;
-    private int noOfSeats;
     private VehicleStatus status;
     private VehicleType type;
 
@@ -20,15 +16,11 @@ public abstract class Vehicle {
         this.type = type;
     }
 
-    protected Vehicle(int vehicleId, String vehicleNum, String company, String modelName, double dailyRentalCost, double hourlyRentalCost, double average, int noOfSeats, VehicleType type) {
+    protected Vehicle(int vehicleId, String vehicleNum, double dailyRentalCost, double hourlyRentalCost,VehicleType type) {
         this.vehicleId = vehicleId;
         this.vehicleNum = vehicleNum;
-        this.company = company;
-        this.modelName = modelName;
         this.dailyRentalCost = dailyRentalCost;
         this.hourlyRentalCost = hourlyRentalCost;
-        this.average = average;
-        this.noOfSeats = noOfSeats;
         this.status = VehicleStatus.AVAILABLE;
         this.type = type;
     }
@@ -43,10 +35,6 @@ public abstract class Vehicle {
 
     public void setHourlyRentalCost(double hourlyRentalCost) {
         this.hourlyRentalCost = hourlyRentalCost;
-    }
-
-    public void setAverage(double average) {
-        this.average = average;
     }
 
     public double getDailyRentalCost() {
