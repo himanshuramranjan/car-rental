@@ -1,14 +1,21 @@
 package model;
 
-import booking.Reservation;
-import booking.ReservationType;
+import enums.ReservationStatus;
+import enums.ReservationType;
+import enums.VehicleStatus;
+import enums.VehicleType;
+import model.reservation.HourlyReservation;
+import model.reservation.Reservation;
+import model.vehicle.Vehicle;
+import service.PaymentService;
+import service.VehicleInventory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
-    private int storeId;
+    private final int storeId;
     private Location location;
     private VehicleInventory vehicleInventory;
     private List<Reservation> reservations;
@@ -16,7 +23,7 @@ public class Store {
     public Store(int storeId, Location location, List<Vehicle> vehicles) {
         this.storeId = storeId;
         this.location = location;
-        this.vehicleInventory = VehicleInventory.getInstance(vehicles);
+        this.vehicleInventory = new VehicleInventory(vehicles);
         this.reservations = new ArrayList<>();
     }
 
@@ -24,19 +31,26 @@ public class Store {
         return this.vehicleInventory.getAvailableVehicles(vehicleType);
     }
 
-    public Reservation reserveVehicle(User user, Vehicle vehicle, LocalDateTime pickupTime,
-                               LocalDateTime dropTime, Location dropLocation)
+    public Reservation reserveVehicle(User user, Vehicle vehicle, LocalDateTime pickupTime, Location dropLocation)
     {
-        Reservation reservation = new Reservation(user, vehicle, pickupTime, dropTime, location, dropLocation, ReservationType.DAILY);
+        Reservation reservation = new HourlyReservation(user, vehicle, pickupTime, location, dropLocation);
         reservations.add(reservation);
 
+        reservation.setReservationStatus(ReservationStatus.INPROGRESS);
+        reservation.getVehicle().setStatus(VehicleStatus.RENTED);
         System.out.println("Reservation done");
         return reservation;
     }
 
-    public void completeReservation(Reservation reservation) {
+    public void completeReservation(Reservation reservation, PaymentService paymentService) {
+
+        Bill bill = reservation.generateBill();
+        paymentService.makePayment(bill);
+
+        // we can add check if payments status of bill is success or fail
         reservations.remove(reservation);
         reservation.getVehicle().setStatus(VehicleStatus.AVAILABLE);
+        reservation.setReservationStatus(ReservationStatus.COMPLETED);
 
         System.out.println("Reservation completed");
     }
