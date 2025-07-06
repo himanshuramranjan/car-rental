@@ -1,8 +1,14 @@
-import booking.Bill;
-import booking.Payment;
-import booking.PaymentMode;
-import booking.Reservation;
+import model.Bill;
+import model.vehicle.Bike;
+import model.vehicle.Car;
+import model.vehicle.Vehicle;
+import service.CashPaymentService;
+import model.reservation.Reservation;
+import enums.VehicleStatus;
+import enums.VehicleType;
 import model.*;
+import service.PaymentService;
+import service.VehicleRentalSystem;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -20,10 +26,10 @@ public class VehicleRentalSystemApplication {
         //create vehicles
         List<Vehicle> vehicleList1= new ArrayList<>();
         List<Vehicle> vehicleList2= new ArrayList<>();
-        Vehicle vehicle1= new Car(1);
-        Vehicle vehicle2= new Car(2);
-        Vehicle vehicle3= new Bike(3);
-        Vehicle vehicle4= new Bike(4);
+        Vehicle vehicle1= new Car(1, "123", 5000, 200);
+        Vehicle vehicle2= new Car(2, "234", 8000, 400);
+        Vehicle vehicle3= new Bike(3, "346", 4000, 100);
+        Vehicle vehicle4= new Bike(4, "458", 2000, 50);
         vehicleList1.add(vehicle1);
         vehicleList1.add(vehicle2);
         vehicleList2.add(vehicle3);
@@ -47,30 +53,17 @@ public class VehicleRentalSystemApplication {
 
         //user1 wants to rent Car in Noida location
         List<Store> allStores= vehicleRentalSystem.findStores(location1);
+
         //user selects store 1 in the displayed list
         Store store= allStores.get(0);
         List<Vehicle> allVehicles = store.getAllVehicles(VehicleType.CAR);
         //user wants to reserve first car in the displayed list
-        Vehicle reservedVehicle = allVehicles.get(0);
-        Reservation reservation= allStores.get(0).reserveVehicle(user1, reservedVehicle,
-                LocalDateTime.of(2023, Month.JUNE, 29, 05, 30, 00),
-                LocalDateTime.of(2023, Month.JUNE, 30, 22, 30, 00),
+        Vehicle reservedVehicle = allVehicles.get(1);
+        Reservation reservation= store.reserveVehicle(user1, reservedVehicle,
+                LocalDateTime.of(2025, Month.JUNE, 29, 05, 30, 00),
                 location1);
 
-        //Bill is generated
-        Bill bill = new Bill(reservation, 100.50);
-
-        //User does payment
-        Payment payment = new Payment(bill, PaymentMode.UPI);
-        payment.makePayment();
-
-        //Booking is confirmed
-        //user comes to pickup vehicle
-        reservedVehicle.setStatus(VehicleStatus.RENTED);
-
         //user drops the vehicle
-        store.completeReservation(reservation);
-
-
+        store.completeReservation(reservation, new CashPaymentService());
     }
 }
