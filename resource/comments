@@ -1,0 +1,23 @@
+> Why not put the responsibility of doing the reservation and closing it from VehicleRentalSystem class
+
+While it may seem tempting to put everything in VehicleRentalSystem, that would:
+-Violate Single Responsibility Principle
+-Lead to a god class — bloated and hard to test or maintain
+-Mix concerns of coordination and execution
+
+Let VehicleRentalSystem only orchestrate:
+-Finding the correct store
+-Passing user request to the right store for booking or closing
+
+> Why using Reservation subclassing rather using Strategy pattern for Billing
+
+Using Reservation subclassing (e.g., HourlyReservation, DailyReservation) is ideal when billing behavior is tightly coupled with the reservation type,
+and the types represent clear domain concepts. It offers clean polymorphism, strong cohesion, and works well when you have a small number of reservation types.
+
+In contrast, the Strategy pattern separates billing logic from the reservation, allowing greater flexibility, reuse,
+and runtime behavior changes — but at the cost of slightly more indirection and boilerplate.
+
+Subclassing is preferred when behavior varies broadly and types are distinct,
+while Strategy is better for highly dynamic or composable billing logic.
+
+For your current case with 2 reservation types, subclassing is the simpler and more expressive choice.

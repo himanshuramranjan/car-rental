@@ -1,0 +1,146 @@
++-----------------------+
+|  VehicleRentalSystem  |
++-----------------------+
+| - stores: List<Store> |
+| - users: List<User>   |
++-----------------------+
+| +addStore(Store)      |
+| +addUser(User)        |
+| +findStores(Location) |
+| +getStoreById(id)     |
++-----------------------+
+
+        |
+        | has-many
+        ▼
+
++------------+
+|   Store    |
++------------+
+| - id       |
+| - name     |
+| - location : Location
+| - vehicles : List<Vehicle>
+| - reservations : List<Reservation>
++------------+
+| +getAvailableVehicles(VehicleType)         |
+| +reserveVehicle(User, Vehicle, ...)        |
+| +completeReservation(Reservation)          |
++------------+
+
+        |
+        | has-many
+        ▼
+
++---------------+
+|   Vehicle     |<---------------------+
++---------------+                      |
+| - id          |                      |
+| - type        |                      |
+| - model       |                      |
+| - status      | <<enum>>             |
+| - hourlyRate  |                      |
+| - dailyRate   |                      |
+| - kmsDriven   |                      |
++---------------+                      |
+| +setStatus()                         |
++---------------+                      |
+                                       |
+                                       |
+        +---------------------->+-------------+
+        |                       | VehicleType |
+        |                       +-------------+
+        |                       | <<enum>>    |
+        |                       | CAR         |
+        |                       | BIKE        |
+        |                       +-------------+
+
+        +---------------------->+------------------+
+        |                       |  VehicleStatus   |
+        |                       +------------------+
+        |                       | <<enum>>         |
+        |                       | AVAILABLE        |
+        |                       | RENTED           |
+        |                       | MAINTENANCE      |
+        | -------------         +------------------+
+                      |
+                +---------------------+
+                |   Reservation       |  <<abstract>>
+                +---------------------+
+                | - id                |
+                | - user              |
+                | - vehicle           |
+                | - pickupTime        |
+                | - dropTime          |
+                | - pickupLocation    |
+                | - dropLocation      |
+                | - status            |
+                +---------------------+
+                | +generateBill()     |  <<abstract>>
+                | +markCompleted()    |
+                +---------------------+
+                     ▲           ▲
+                     |           |
+     +------------------+   +------------------+
+     | HourlyReservation|   | DailyReservation |
+     +------------------+   +------------------+
+     | +generateBill()  |   | +generateBill()  |
+     +------------------+   +------------------+
+
+
+             |
+             | generates
+             ▼
+
++------------------------+
+|         Bill           |
++------------------------+
+| - id                   |
+| - reservation: Reservation
+| - amount               |
+| - paymentStatus        | <<enum>>
++------------------------+
+
+        |
+        | paid via
+        ▼
+
++------------------------+
+|      PaymentService    |
++------------------------+
+| +processPayment(bill, mode): Payment |
++------------------------+
+
++------------------+
+|     Payment      |
++------------------+
+| - id             |
+| - bill: Bill     |
+| - mode           | <<enum>>
+| - status         | <<enum>>
++------------------+
+
++------------------+           +------------------+
+|  RentalType      |           | ReservationStatus|
++------------------+           +------------------+
+| <<enum>>         |           | <<enum>>         |
+| HOURLY           |           | SCHEDULED        |
+| DAILY            |           | INPROGRESS       |
+|                  |           | COMPLETED        |
+|                  |           | CANCELLED        |
++------------------+           +------------------+
+
++-----------------+
+|     User        |
++-----------------+
+| - id            |
+| - name          |
+| - licenseNumber |
++-----------------+
+
++------------------+
+|    Location      |
++------------------+
+| - city           |
+| - pincode        |
++------------------+

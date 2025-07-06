@@ -1,5 +1,7 @@
-package booking;
+package model;
 
+import enums.ReservationStatus;
+import enums.ReservationType;
 import model.Location;
 import model.User;
 import model.Vehicle;
@@ -7,52 +9,28 @@ import model.Vehicle;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Reservation {
+public abstract class Reservation {
     private final String reservationId;
     private final User user;
-    private Vehicle vehicle;
-    private LocalDateTime pickupTime;
-    private LocalDateTime dropTime;
-    private Location pickupLocation;
-    private Location dropLocation;
+    private final Vehicle vehicle;
+    private final LocalDateTime pickupTime;
+    private final Location pickupLocation;
+    private final Location dropLocation;
     private ReservationStatus reservationStatus;
     private ReservationType reservationType;
 
-    public Reservation(User user, Vehicle vehicle, LocalDateTime pickupTime, LocalDateTime dropTime, Location pickupLocation, Location dropLocation, ReservationType reservationType) {
+    protected Reservation(User user, Vehicle vehicle, LocalDateTime pickupTime, Location pickupLocation, Location dropLocation, ReservationType reservationType) {
         this.reservationId = UUID.randomUUID().toString();
         this.user = user;
         this.vehicle = vehicle;
         this.pickupTime = pickupTime;
-        this.dropTime = dropTime;
         this.pickupLocation = pickupLocation;
         this.dropLocation = dropLocation;
         this.reservationStatus = ReservationStatus.SCHEDULED;
         this.reservationType = reservationType;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    public void setPickupTime(LocalDateTime pickupTime) {
-        this.pickupTime = pickupTime;
-    }
-
-    public void setDropTime(LocalDateTime dropTime) {
-        this.dropTime = dropTime;
-    }
-
-    public void setPickupLocation(Location pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-    public void setDropLocation(Location dropLocation) {
-        this.dropLocation = dropLocation;
-    }
-
-    public void setReservationStatus(ReservationStatus reservationStatus) {
-        this.reservationStatus = reservationStatus;
-    }
+    public abstract Bill generateBill();
 
     public void setReservationType(ReservationType reservationType) {
         this.reservationType = reservationType;
@@ -74,10 +52,6 @@ public class Reservation {
         return pickupTime;
     }
 
-    public LocalDateTime getDropTime() {
-        return dropTime;
-    }
-
     public Location getPickupLocation() {
         return pickupLocation;
     }
@@ -88,6 +62,10 @@ public class Reservation {
 
     public ReservationStatus getReservationStatus() {
         return reservationStatus;
+    }
+
+    public void setReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
 
     public ReservationType getReservationType() {

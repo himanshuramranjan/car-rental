@@ -1,6 +1,9 @@
 package model;
 
-public class Vehicle {
+import enums.VehicleStatus;
+import enums.VehicleType;
+
+public abstract class Vehicle {
     private int vehicleId;
     private String vehicleNum;
     private String company;
@@ -12,12 +15,12 @@ public class Vehicle {
     private VehicleStatus status;
     private VehicleType type;
 
-    public Vehicle(int vehicleId, VehicleType type) {
+    protected Vehicle(int vehicleId, VehicleType type) {
         this.vehicleId = vehicleId;
         this.type = type;
     }
 
-    public Vehicle(int vehicleId, String vehicleNum, String company, String modelName, double dailyRentalCost, double hourlyRentalCost, double average, int noOfSeats, VehicleStatus status, VehicleType type) {
+    protected Vehicle(int vehicleId, String vehicleNum, String company, String modelName, double dailyRentalCost, double hourlyRentalCost, double average, int noOfSeats, VehicleType type) {
         this.vehicleId = vehicleId;
         this.vehicleNum = vehicleNum;
         this.company = company;
@@ -26,7 +29,7 @@ public class Vehicle {
         this.hourlyRentalCost = hourlyRentalCost;
         this.average = average;
         this.noOfSeats = noOfSeats;
-        this.status = status;
+        this.status = VehicleStatus.AVAILABLE;
         this.type = type;
     }
 

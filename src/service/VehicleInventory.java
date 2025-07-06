@@ -1,23 +1,16 @@
 package model;
 
+import enums.VehicleStatus;
+import enums.VehicleType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleInventory {
-    public static volatile VehicleInventory vehicleInventory;
     private final List<Vehicle> vehicles;
 
-    private VehicleInventory(List<Vehicle> vehicles) { this.vehicles = vehicles; }
-
-    public static VehicleInventory getInstance(List<Vehicle> vehicles) {
-        if(vehicleInventory == null) {
-            synchronized (VehicleInventory.class) {
-                if(vehicleInventory == null) {
-                    vehicleInventory = new VehicleInventory(vehicles);
-                }
-            }
-        }
-        return vehicleInventory;
+    public VehicleInventory(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     public List<Vehicle> getAvailableVehicles(VehicleType vehicleType) {
