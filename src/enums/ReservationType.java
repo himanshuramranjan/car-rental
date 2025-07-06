@@ -1,4 +1,4 @@
-package booking;
+package enums;
 
 public enum ReservationType {
     HOURLY,
