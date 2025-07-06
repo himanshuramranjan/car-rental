@@ -1,10 +1,11 @@
-package model;
+package model.reservation;
 
 import enums.ReservationStatus;
 import enums.ReservationType;
+import model.Bill;
 import model.Location;
 import model.User;
-import model.Vehicle;
+import model.vehicle.Vehicle;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,9 +18,8 @@ public abstract class Reservation {
     private final Location pickupLocation;
     private final Location dropLocation;
     private ReservationStatus reservationStatus;
-    private ReservationType reservationType;
 
-    protected Reservation(User user, Vehicle vehicle, LocalDateTime pickupTime, Location pickupLocation, Location dropLocation, ReservationType reservationType) {
+    protected Reservation(User user, Vehicle vehicle, LocalDateTime pickupTime, Location pickupLocation, Location dropLocation) {
         this.reservationId = UUID.randomUUID().toString();
         this.user = user;
         this.vehicle = vehicle;
@@ -27,14 +27,9 @@ public abstract class Reservation {
         this.pickupLocation = pickupLocation;
         this.dropLocation = dropLocation;
         this.reservationStatus = ReservationStatus.SCHEDULED;
-        this.reservationType = reservationType;
     }
 
     public abstract Bill generateBill();
-
-    public void setReservationType(ReservationType reservationType) {
-        this.reservationType = reservationType;
-    }
 
     public String getReservationId() {
         return reservationId;
@@ -66,9 +61,5 @@ public abstract class Reservation {
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
-    }
-
-    public ReservationType getReservationType() {
-        return reservationType;
     }
 }
