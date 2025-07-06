@@ -1,7 +1,8 @@
-package model;
+package service;
 
 import enums.VehicleStatus;
 import enums.VehicleType;
+import model.vehicle.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,8 @@
-package model;
+package service;
+
+import model.Location;
+import model.Store;
+import model.User;
 
 import java.util.ArrayList;
 import java.util.List;
