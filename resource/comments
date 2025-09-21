@@ -21,3 +21,8 @@ Subclassing is preferred when behavior varies broadly and types are distinct,
 while Strategy is better for highly dynamic or composable billing logic.
 
 For your current case with 2 reservation types, subclassing is the simpler and more expressive choice.
+
+> Why we even need Different Reservation Type
+
+Yeah at current scope(having only 2 scenarios) its more sensible to have different billing methods inside the
+Reservation class, but it will further hinders the scalability and visibility.
