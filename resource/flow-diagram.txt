@@ -1,0 +1,65 @@
+Vehicle Rental System Flow
+========================
+
+[Start]
+   |
+   v
+[Create Users]
+   | user1, user2
+   v
+[Create Vehicles]------------------+
+   |                              |
+   |                              v
+   |                     +----------------+
+   |                     |  Vehicle List  |
+   |                     |  Car1, Car2    |
+   |                     |  Bike1, Bike2  |
+   |                     +----------------+
+   v
+[Create Location]
+   | (UP, Noida, Sector 135)
+   v
+[Create Stores]----------------+
+   |                          |
+   |                          v
+   |                  +--------------+
+   |                  | Store1: Cars |
+   |                  | Store2: Bikes|
+   |                  +--------------+
+   v
+[Initialize VehicleRentalSystem]
+   |
+   v
+[Add Users to System]
+   |
+   v
+[Add Stores to System]
+   |
+   v
+[User1 searches stores in location]
+   |
+   v
+[Select Store from list]
+   | (Store1 selected)
+   v
+[Get all vehicles of type CAR]
+   |
+   v
+[Select vehicle to reserve]
+   | (Car2 selected)
+   v
+[Create Reservation]
+   | DateTime: 2025-06-29 05:30:00
+   v
+[Complete Reservation]
+   | Payment: Cash
+   v
+[End]
+
+
+Legend:
+-------
+|, - : Flow direction
++---> : Branch/Connection
+[ ]   : Process/Action
+( )   : Additional information
