@@ -1,3 +1,4 @@
+import enums.ReservationType;
 import model.Bill;
 import model.vehicle.Bike;
 import model.vehicle.Car;
@@ -61,7 +62,7 @@ public class VehicleRentalSystemApplication {
         Vehicle reservedVehicle = allVehicles.get(1);
         Reservation reservation= store.reserveVehicle(user1, reservedVehicle,
                 LocalDateTime.of(2025, Month.JUNE, 29, 05, 30, 00),
-                location1);
+                location1, ReservationType.HOURLY);
 
         //user drops the vehicle
         store.completeReservation(reservation, new CashPaymentService());

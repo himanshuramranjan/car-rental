@@ -4,6 +4,7 @@ import enums.ReservationStatus;
 import enums.ReservationType;
 import enums.VehicleStatus;
 import enums.VehicleType;
+import factory.ReservationFactory;
 import model.reservation.HourlyReservation;
 import model.reservation.Reservation;
 import model.vehicle.Vehicle;
@@ -31,9 +32,16 @@ public class Store {
         return this.vehicleInventory.getAvailableVehicles(vehicleType);
     }
 
-    public Reservation reserveVehicle(User user, Vehicle vehicle, LocalDateTime pickupTime, Location dropLocation)
+    public Reservation reserveVehicle(User user, Vehicle vehicle, LocalDateTime pickupTime, Location dropLocation, ReservationType reservationType)
     {
-        Reservation reservation = new HourlyReservation(user, vehicle, pickupTime, location, dropLocation);
+        Reservation reservation = ReservationFactory.createReservation(
+                reservationType,
+                user,
+                vehicle,
+                pickupTime,
+                this.location,
+                dropLocation
+        );
         reservations.add(reservation);
 
         reservation.setReservationStatus(ReservationStatus.INPROGRESS);
